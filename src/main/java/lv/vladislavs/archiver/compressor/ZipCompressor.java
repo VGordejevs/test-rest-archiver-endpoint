@@ -1,6 +1,7 @@
 package lv.vladislavs.archiver.compressor;
 
 import lv.vladislavs.archiver.exception.FileCompressionException;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+@Component
 public class ZipCompressor implements FileCompressor {
     @Override
     public InputStream compressMultipartFiles(MultipartFile[] multipartFiles) {
