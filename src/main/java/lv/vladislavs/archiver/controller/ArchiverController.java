@@ -2,6 +2,8 @@ package lv.vladislavs.archiver.controller;
 
 import lv.vladislavs.archiver.compressor.ArchivingMethod;
 import lv.vladislavs.archiver.compressor.FileCompressor;
+import lv.vladislavs.archiver.compressor.FileCompressorFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,17 +16,21 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1/archiver")
 public class ArchiverController {
-    private final static String archivedFileName = "compressed";
+    private final static String ARCHIVED_FILE_NAME = "compressed";
+
+    @Autowired
+    FileCompressorFactory fileCompressorFactory;
 
     @PostMapping("/{extension}")
-    public ResponseEntity<byte[]> archiver(@PathVariable String extension, @RequestParam("files") MultipartFile[] multipartFiles) throws IOException {
+    public ResponseEntity<byte[]> archiver(@PathVariable String extension,
+                                           @RequestParam("files") MultipartFile[] multipartFiles) throws IOException {
         ArchivingMethod archivingMethod = ArchivingMethod.fromExtensionIgnoreCase(extension);
-        FileCompressor fileCompressor = FileCompressor.from(archivingMethod);
+        FileCompressor fileCompressor = fileCompressorFactory.from(archivingMethod);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         responseHeaders.add(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=" + archivedFileName + "." + archivingMethod);
+                "attachment; filename=" + ARCHIVED_FILE_NAME + "." + archivingMethod);
 
         return new ResponseEntity<>(fileCompressor.compressMultipartFiles(multipartFiles).readAllBytes(),
                 responseHeaders,
