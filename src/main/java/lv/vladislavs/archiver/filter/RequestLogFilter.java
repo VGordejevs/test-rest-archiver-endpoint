@@ -2,7 +2,6 @@ package lv.vladislavs.archiver.filter;
 
 import lv.vladislavs.archiver.model.database.RequestLog;
 import lv.vladislavs.archiver.repository.RequestLogRepository;
-import lv.vladislavs.archiver.util.HttpReqRespUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+
+import static lv.vladislavs.archiver.util.HttpReqRespUtil.getIpAddress;
 
 @Component
 public class RequestLogFilter implements Filter {
@@ -23,7 +24,7 @@ public class RequestLogFilter implements Filter {
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        String ipAddress = HttpReqRespUtils.getIpAddress(httpServletRequest);
+        String ipAddress = getIpAddress(httpServletRequest);
         String servletPath = httpServletRequest.getServletPath();
 
         requestLogRepository.save(RequestLog.builder()
