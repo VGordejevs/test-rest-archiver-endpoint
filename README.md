@@ -1,4 +1,4 @@
-###If we add multiple archiving methods (7z, for example):
+### If we add multiple archiving methods (7z, for example):
 * ArchivingMethod enum must be populated. Ex.: SEVEN_ZIP("7z"") enum.
 * Implementation of new compressor must be added and implement FileCompressor interface.
 * FileCompressorFactory must be updated to provide new compressor.
