@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestArchiverEndpointTestApplication {
+public class RestArchiverApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestArchiverEndpointTestApplication.class, args);
+		SpringApplication.run(RestArchiverApplication.class, args);
 	}
 
 }
