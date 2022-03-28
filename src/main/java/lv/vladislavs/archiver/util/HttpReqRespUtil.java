@@ -2,7 +2,7 @@ package lv.vladislavs.archiver.util;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class HttpReqRespUtils {
+public class HttpReqRespUtil {
     private static final String[] IP_HEADER_CANDIDATES = {
         "X-Forwarded-For",
         "Proxy-Client-IP",
